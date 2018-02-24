@@ -18,10 +18,9 @@ react-native init mytestapp --template tesseractocr
 
 # Suggestion
 
-Add the following in your package for easier testing (from your project root):
+Run following in your package for easier testing (from your project root):
 
 ```
-yarn add react-native-setdevteam
 react-native setdevteam
 react-native run-ios --device
 ```
