@@ -16,12 +16,30 @@ react-native init mytestapp --template tesseractocr
 
 (Replace `mytestapp` with whatever you want to name your app)
 
+# Required
+
+For whatever reason the [react-native-camera-clean](https://npmjs.com/package/react-native-camera-clean) gets undone at the end of the template install process. So to allow fast delployment, run (from your project root)
+
+```
+react-native link
+```
+
 # Suggestion
 
-Run following in your package for easier testing (from your project root):
+Run following in your package for fast deployment (e.g. not having to set development team in XCode):
 
 ```
 react-native setdevteam
+react-native run-ios --device
+```
+
+# Putting it all together
+
+```
+react-native init mytesstestapp --template tesseractocr ; \
+cd mytesstestapp ; \
+react-native link ; \
+react-native setdevteam ; \
 react-native run-ios --device
 ```
 
