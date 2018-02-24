@@ -11,12 +11,6 @@ import {
 import RNFS from "react-native-fs";
 import Tesseract from "react-native-tesseract";
 import { RNCamera } from "react-native-camera";
-const instructions = Platform.select({
-  ios: "Press Cmd+R to reload,\n" + "Cmd+D or shake for dev menu",
-  android:
-    "Double tap R on your keyboard to reload,\n" +
-    "Shake or press menu button for dev menu"
-});
 
 async function downloadLanguage(language) {
   await Tesseract.setLanguage(language);
@@ -29,7 +23,6 @@ async function downloadLanguage(language) {
   if (exists) await RNFS.unlink(fullPath);
   if (true) {
     const url = Tesseract.getURLForLanguage(language);
-    console.log("Downloading from url", url);
     const { promise } = RNFS.downloadFile({
       fromUrl: url,
       toFile: fullPath
@@ -38,9 +31,6 @@ async function downloadLanguage(language) {
     await promise;
     console.log("Saved to file", fullPath);
     const newExists = await RNFS.exists(fullPath);
-    console.log("Does it exit now?", newExists);
-    const stats = await RNFS.stat(fullPath);
-    console.log("statistics", stats);
   }
   return true;
 }
@@ -48,11 +38,14 @@ export default class App extends Component {
   componentWillMount() {
     (async () => {
       await downloadLanguage("eng");
-      this.setState({ allowPress: true });
+      this.setState({
+        allowPress: true,
+        text: "Press the preview image (lower right) to trigger a scan"
+      });
     })();
   }
   state = {
-    text: "Nothing captured so far, dude",
+    text: "Please wait - initializing",
     uri: null,
     allowPress: false
   };
@@ -110,6 +103,9 @@ export default class App extends Component {
                   this.setState({ allowPress: true });
                 })();
               } else {
+                this.setState({
+                  text: " Cannot press right now because scan in progress!"
+                });
                 console.log("Not allowing press right now");
               }
             }}
@@ -118,7 +114,11 @@ export default class App extends Component {
               ref={ref => {
                 this.camera = ref;
               }}
-              style={{ width: "100%", height: "100%" }}
+              style={{
+                width: "100%",
+                height: "100%",
+                opacity: this.state.allowPress ? 1.0 : 0.5
+              }}
             />
           </TouchableOpacity>
         </View>
