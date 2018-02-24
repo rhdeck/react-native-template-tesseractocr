@@ -1,6 +1,6 @@
 {
   "react-native-pod": "^1.8.0",
-  "react-native-camera-clean": "link:../react-native-camera-clean",
+  "react-native-camera-clean": "^1.0.0",
   "react-native-camera": "^1.0.1",
   "react-native-camera-ios-enable": "^1.1.0",
   "react-native-fix-ios-version": "^1.4.0",
