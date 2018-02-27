@@ -20,8 +20,7 @@ async function downloadLanguage(language) {
   const fileName = await Tesseract.getFileNameForLanguage(language);
   const fullPath = tessPath + "/" + fileName;
   const exists = await RNFS.exists(fullPath);
-  if (exists) await RNFS.unlink(fullPath);
-  if (true) {
+  if (!exists) {
     const url = Tesseract.getURLForLanguage(language);
     const { promise } = RNFS.downloadFile({
       fromUrl: url,
@@ -29,7 +28,6 @@ async function downloadLanguage(language) {
     });
 
     await promise;
-    console.log("Saved to file", fullPath);
     const newExists = await RNFS.exists(fullPath);
   }
   return true;
@@ -88,7 +86,6 @@ export default class App extends Component {
               if (this.state.allowPress) {
                 (async () => {
                   this.setState({ allowPress: false, text: "Taking picture!" });
-                  console.log(this.camera);
                   const { uri } = await this.camera.takePictureAsync();
                   this.setState({ uri });
                   try {
@@ -96,9 +93,7 @@ export default class App extends Component {
                     const text = await Tesseract.recognizeURL(uri);
                     this.setState({ text });
                   } catch (e) {
-                    console.log("Got an error");
                     this.setState({ text: "Error with scan" });
-                    console.log(e);
                   }
                   this.setState({ allowPress: true });
                 })();
@@ -106,7 +101,6 @@ export default class App extends Component {
                 this.setState({
                   text: " Cannot press right now because scan in progress!"
                 });
-                console.log("Not allowing press right now");
               }
             }}
           >
