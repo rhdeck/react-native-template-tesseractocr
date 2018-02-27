@@ -15,7 +15,7 @@ import { RNCamera } from "react-native-camera";
 async function downloadLanguage(language) {
   await Tesseract.setLanguage(language);
   const tessPath = await Tesseract.setDataPath(
-    RNFS.CachesDirectoryPath // + "/tessdata"
+    RNFS.CachesDirectoryPath + "/tessdata"
   );
   const fileName = await Tesseract.getFileNameForLanguage(language);
   const fullPath = tessPath + "/" + fileName;
