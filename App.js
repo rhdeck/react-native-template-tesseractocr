@@ -90,7 +90,7 @@ export default class App extends Component {
                   this.setState({ uri });
                   try {
                     this.setState({ text: "Scanning picture" });
-                    const text = await Tesseract.recognizeURL(uri);
+                    const { text } = await Tesseract.recognizeURL(uri);
                     this.setState({ text });
                   } catch (e) {
                     this.setState({ text: "Error with scan" });

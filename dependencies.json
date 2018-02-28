@@ -6,6 +6,6 @@
   "react-native-fs": "^2.9.11",
   "react-native-setdevteam": "^1.1.1",
   "react-native-swift": "^1.2.0",
-  "react-native-tesseract": "^1.0.0",
+  "react-native-tesseract": "^2.0.0",
   "react-native-camera-clean": "^1.0.0"
 }
